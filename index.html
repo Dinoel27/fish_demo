@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Fish demo</title>
+        <meta name="description" content="MR.js project">
+        <script src="https://cdn.jsdelivr.net/npm/mrjs@latest/dist/mr.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!-- <mr-app debug="true"> -->
+            <!-- <mr-panel class="layout"> -->
+                <!-- <mr-app debug="true"> -->
+                    <mr-app>
+                <mr-panel id="panel">
+                                <!-- Button for toggling models forward -->
+                                <mr-button onclick="cycleModel('forward')" class="buttonf">Next Model</mr-button>
+                                <mr-button onclick="cycleModel('backward')" class="buttonf">Previous Model</mr-button>
+                            
+                </mr-app>
+            </mr-panel>
+  
+                <mr-div class="koimodel">
+                    <mr-model data-rotation="0 0 0" src="./assets/koifish.glb">
+                        <mr-light layer="2" color="hsl(100, 100%, 100%)" intensity="1" data-position="0 1 0"></mr-light>
+                    </mr-model> 
+                <mr-div class="cube">
+                    <mr-model data-rotation="0 0 0" src="./assets/cube.glb"></mr-model>
+                    </mr-div>
+           
+                </mr-div>
+            </mr-panel>
+        </mr-app>
+
+<script>
+     // Array of model names
+     var modelNames = ['koifish.glb', 'cube.glb'];
+        var currentModelIndex = 0;
+
+        // Function to cycle through models
+        function cycleModel(direction) {
+            // Hide the currently visible model
+            models[modelNames[currentModelIndex]].visible = false;
+
+            // Update the current model index based on the direction
+            if (direction === 'forward') {
+                currentModelIndex = (currentModelIndex + 1) % modelNames.length;
+            } else if (direction === 'backward') {
+                currentModelIndex = (currentModelIndex - 1 + modelNames.length) % modelNames.length;
+            }
+
+            // Show the new model
+            models[modelNames[currentModelIndex]].visible = true;
+        }
+
+        // Object to store loaded models
+        var models = {};
+
+        // Example: Assume models are already loaded and ready to use
+        document.addEventListener('DOMContentLoaded', function () {
+            // In this example, 'koifish' and 'cube' are assumed to be already loaded and ready to use
+
+            // Set the initial model to be displayed
+            models[modelNames[currentModelIndex]].visible = true;
+        });
+</script>
+
+    </body>
+
+</html>
+
+

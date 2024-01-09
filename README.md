@@ -1,2 +1,2 @@
-# Isetta_Cafe_Car_Gallery
-Immersive Gallery of 3D Scanned Vehicles 
+# Fish demo
+Showing a demo of different fishes 

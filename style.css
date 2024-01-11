@@ -11,17 +11,54 @@ mr-text {
     font-size: 16px; 
 }
 
-/* mr-button {
-    padding: 5px;
-    background-color: blue;
-    border-radius: 0.5%;
-} */
+mr-button {
+    /* margin-left:100px; 
+    padding: 20px;
+    background-color: rgba(127, 255, 212, 0.466);
+    border-radius: 5%;
+    border-color: gold;
+
+    font-family:'Neue_Haas_Grotesk_Display_Pro';
+    font-size: 4vw;
+    line-height: 100%;
+    font-weight: 300;
+    color:black;
+
+
+    text-align: center;
+    text-decoration: none; */
+    
+
+}
+
+mr-panel {
+background-color: white;
+border-radius: 2;
+
+}
+
+mr-app * {
+    visibility: visible;
+    box-sizing:content-box;
+}
+
+mr-app > canvas {
+    visibility:visible;
+}
 
 .layout {
     display: grid; 
     grid-template-columns: 1fr 2fr 1fr; 
     gap: 10px; 
     grid-auto-rows: minmax(100px, auto);
+
+    background-color: white;
+    /* background-color: var(--color-paper);
+    padding-top: 6vw;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 1vw;
+    grid-auto-rows: minmax(100px, auto); */
 }
 
 .title {
@@ -172,69 +209,83 @@ mr-text {
 
 
   .koimodel {
+    margin-top: 100px;
+    /* margin-left: 1000px; */
+    scale: 0.05; 
     
-    /* scale: 0.001; */
-    margin-top: 50px;
-     scale: 0.1; 
-     grid-column: 2;
-     z-index: 100;
-     height: 400px;
+    z-index: 10; 
+    margin-left: 150px;
+    
+
+    grid-row: 1/ span 3;
+    grid-column: 1 /span 3;
 }
+
+.cube {
+     margin-top: 100px;
+     scale: 0.1; 
+     z-index: 100;
+    grid-row: 1 / span 3;
+    grid-column: 1 / span 3;
+  }
 
 
 
   .buttonf {
-    margin-left: 100px;
-    padding: 5px;
-    background-color: rgb(117, 205, 219);
-    border-radius: 0.5%;
-    z-index: 10;
+    /* margin: auto; */
+    /* grid-column: 3; */
+    align-self: end;
+    grid-row: 4 / span 3; 
+    grid-column: 3 / span 3; 
+   
+    line-height: 100%;
 
-    font-family:'Neue_Haas_Grotesk_Display_Pro', sans-serif;
-    font-size: 8vw;
+
+
+    padding: 20px;
+    background-color: rgba(127, 255, 212, 0.466);
+    border-radius: 0.5%;
+    border-color: gold;
+
+    font-family:'Neue_Haas_Grotesk_Display_Pro';
+    font-size: 4vw;
     line-height: 100%;
     font-weight: 300;
     color:black;
-    display: -webkit-box;
 
 
-    /* margin: auto;
-    grid-column: 4;
+    text-align: center;
+    text-decoration: none;
+
+    z-index: 2;
+  }
+
+
+  .buttonb {
+    /* margin: auto; */
+    /* grid-column: 3; */
     align-self: end;
-    font-family: var(--font-title);
+    grid-row: 4 / span 3; 
+    grid-column: 1 / span 1; 
+    
+    line-height: 100%;
+
+
+    padding: 20px;
+    background-color: rgba(127, 255, 212, 0.466);
+    border-radius: 0.5%;
+    border-color: gold;
+
+    font-family:'Neue_Haas_Grotesk_Display_Pro';
     font-size: 4vw;
-    line-height: 100%; */
+    line-height: 100%;
+    font-weight: 300;
+    color:black;
+
+
+    text-align: center;
+    text-decoration: none;
+
+    z-index: 10;
+
   }
-
-  .cube {
-    margin-top: 50px;
-     scale: 0.1; 
-     grid-column: 2;
-     z-index: 100;
-     height: 400px;
-  }
-
-  .custom-button {
-    /* Button Styles */
-    padding: 10px 20px; /* Adjust padding as needed */
-    background-color:aqua; /* Adjust color as needed */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    z-index: 5;
-
-    /* Text Styles */
-    font-family: 'Bricolage', sans-serif; /* Set the desired font family */
-    font-size: 18px; /* Set the desired font size */
-    color: var(--color-button-text); /* Adjust text color as needed */
-}
-
-.custom-button:hover {
-    background-color: var(--color-button-hover);
-}
-
-.custom-button:active {
-    background-color: var(--color-button-active);
-}

@@ -12,26 +12,26 @@
         <!-- <mr-app debug="true"> -->
             <!-- <mr-panel class="layout"> -->
                 <mr-app debug="true">
-                   
                 <mr-panel class="layout">
+                   
                                 <!-- Button for toggling models forward -->
-                                <mr-button class="custom-button" onclick="cycleModel('forward')">Next</mr-button>
-                                
-                                <mr-button class="custom-button" onclick="cycleModel('backward')">Previous</mr-button>
-                            
-               
-          
-  
+                                <mr-button class="buttonf" onclick="cycleModel('forward')">Next</mr-button>
+                                <!-- Button for toggling models backward -->
+                                <mr-button class="buttonb" onclick="cycleModel('backward')">Previous</mr-button> 
+
+                             
+        
                 <mr-div class="koimodel">
-                    <mr-model data-rotation="0 0 0" src="./assets/koifish.glb">
+                    <mr-model data-rotation="0 0 0" src="./assets/koifish.glb"></mr-model> 
                         <mr-light layer="2" color="hsl(100, 100%, 100%)" intensity="1" data-position="0 1 0"></mr-light>
-                    </mr-model> 
-                <mr-div class="cube">
-                    <mr-model data-rotation="0 0 0" src="./assets/cube.glb">
-                    <mr-light layer="2" color="hsl(100, 100%, 100%)" intensity="1" data-position="0 1 0"></mr-light></mr-model>
                     </mr-div>
-           
+
+
+                <mr-div class="cube">
+                    <mr-model data-rotation="0 0 0" src="./assets/cube.glb"></mr-model>
+                    <mr-light layer="2" color="hsl(100, 100%, 100%)" intensity="1" data-position="0 1 0"></mr-light>
                 </mr-div>
+
             </mr-panel>
         </mr-app>
 

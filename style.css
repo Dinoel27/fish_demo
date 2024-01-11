@@ -46,10 +46,6 @@ mr-app {
     z-index: 60;
 }
 
-mr-model {
-    display: block;
-}
-
 mr-button {
     padding: 10px;
     display: inline-block;
@@ -62,12 +58,3 @@ mr-button {
     color: black;
     background-color: yellow;
 }
-
-/* .buttonf {
-    background-color: blue;    
-}
-
-.buttonb {
-    background-color: yellow;
-    margin-left: auto;
-} */

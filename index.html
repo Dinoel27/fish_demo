@@ -1,78 +1,122 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Fish demo</title>
-        <meta name="description" content="MR.js project">
-        <script src="https://cdn.jsdelivr.net/npm/mrjs@latest/dist/mr.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <!-- <mr-app debug="true"> -->
-            <!-- <mr-panel class="layout"> -->
-                <mr-app debug="true">
-                <mr-panel class="layout">
-                   
-                                <!-- Button for toggling models forward -->
-                                <mr-button class="buttonf" onclick="cycleModel('forward')">Next</mr-button>
-                                <!-- Button for toggling models backward -->
-                                <mr-button class="buttonb" onclick="cycleModel('backward')">Previous</mr-button> 
 
-                             
-        
-                <mr-div class="koimodel">
-                    <mr-model data-rotation="0 0 0" src="./assets/koifish.glb"></mr-model> 
-                        <mr-light layer="2" color="hsl(100, 100%, 100%)" intensity="1" data-position="0 1 0"></mr-light>
-                    </mr-div>
+<head>
+    <meta charset="utf-8">
+    <title>Fish demo</title>
+    <meta name="description" content="MR.js project">
+    <script src="https://cdn.jsdelivr.net/npm/mrjs@latest/dist/mr.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
+<body>
+    <mr-app debug="true">
+        <mr-panel class="layout">
 
-                <mr-div class="cube">
-                    <mr-model data-rotation="0 0 0" src="./assets/cube.glb"></mr-model>
-                    <mr-light layer="2" color="hsl(100, 100%, 100%)" intensity="1" data-position="0 1 0"></mr-light>
-                </mr-div>
+            <mr-div class="nav">
+                <mr-button onclick="App.prev()">Next</mr-button>
+                <mr-button style="margin-left: auto;" onclick="App.next()">Prev</mr-button>
+            </mr-div>
 
-            </mr-panel>
-        </mr-app>
+            <mr-div id="models"></mr-div>
 
-<script>
-     // Array of model names
-     var modelNames = ['koifish.glb', 'cube.glb'];
-     var models = document.querySelectorAll('mr-model');
-    
-        var currentModelIndex = 0;
+            <mr-div class="information">
+                <mr-text id="name"></mr-text>
+                <mr-text id="desc"></mr-text>
+            </mr-div>
 
-        // Function to cycle through models
-        function cycleModel(direction) {
-            // Hide the currently visible model
-          
-            models[currentModelIndex].object3D.visible = false;
+            <mr-light color="hsl(100, 100%, 100%)" intensity="1" data-position="0 1 1"></mr-light>
 
-            // Update the current model index based on the direction
-            if (direction === 'forward') {
-                currentModelIndex = (currentModelIndex + 1) % models.length;
-            } else if (direction === 'backward') {
-                currentModelIndex = (currentModelIndex - 1 + models.length) % models.length;
+        </mr-panel>
+    </mr-app>
+
+    <script>
+        var __appState = {
+            fishes: [
+                {
+                    name: "Koi fish",
+                    model: 'koifish.glb',
+                    scale: 0.05,
+                    desc: "Nibh euismod cursus pharetra sit sem ut incididunt cursus in."
+                },
+                {
+                    name: "Cube fish",
+                    model: 'cube.glb',
+                    scale: 0.1,
+                    desc: "Dictumst proin pharetra vestibulum aliqua lectus elit labore cursus dolore."
+                },
+                {
+                    name: "Whale",
+                    model: 'cube.glb',
+                    scale: 0.1,
+                    desc: "Pellentesque ut elit labore adipiscing mi amet ut eiusmod ut."
+                },
+                {
+                    name: "Chicken",
+                    model: 'koifish.glb',
+                    scale: 0.08,
+                    desc: "Hendrerit a elit tortor euismod do sed enim ipsum enim."
+                }
+            ],
+            selected: 0,
+            next: function () {
+                if (this.selected < this.fishes.length - 1) {
+                    this.selected++
+                }
+            },
+            prev: function () {
+                if (this.selected > 0) {
+                    this.selected--
+                }
+            },
+            render: function () {
+                let selectedFish = this.fishes[this.selected];
+
+                document.querySelector("#name").innerText = selectedFish.name;
+                document.querySelector("#desc").innerText = selectedFish.desc;
+
+                let childArray = Array.from(document.querySelector("#models").childNodes);
+
+                // Hide all the fishes but the selected one
+                childArray.forEach(child => {
+                    if (child.dataset.name == App.fishes[App.selected].name) {
+                        child.object3D.visible = true;
+                    } else {
+                        child.object3D.visible = false;
+                    }
+                });
             }
-
-            // Show the new model
-            models[currentModelIndex].object3D.visible = true;
         }
 
-        // Object to store loaded models
-        // var models = {};
+        // Magic reactivity
+        const handler = {
+            set(target, property, value) {
+                target[property] = value;
+                App.render();
+                return true;
+            }
+        };
 
-        // Example: Assume models are already loaded and ready to use
-        document.addEventListener('DOMContentLoaded', function () {
-            // In this example, 'koifish' and 'cube' are assumed to be already loaded and ready to use
+        // Magic reactivity
+        const App = new Proxy(__appState, handler);
 
-            // Set the initial model to be displayed
-            models[currentModelIndex].object3D.visible = true;
+        App.fishes.forEach(fish => {
+            let model = document.createElement("mr-model");
+            model.setAttribute("src", "./assets/" + fish.model);
+            model.object3D.visible = false;
+            model.dataset.name = fish.name;
+            Object.assign(model.style, {
+                scale: fish.scale
+            })
+            document.querySelector("#models").append(model);
         });
-</script>
 
-    </body>
+        document.addEventListener('DOMContentLoaded', function () {
+            App.selected = 0;
+        });
+    </script>
+
+</body>
 
 </html>
-
-

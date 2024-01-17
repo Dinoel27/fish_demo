@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Fish demo</title>
+    <meta name="description" content="MR.js project">
+    <script src="https://cdn.jsdelivr.net/npm/mrjs@latest/dist/mr.js"></script>
+    <link rel="stylesheet" type="text/css" href="Fish_Demo_Style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <mr-app>
+        <mr-panel class="layout">
+
+            <mr-div class="nav">
+                <mr-button onclick="App.prev()">Next</mr-button>
+                <mr-button style="margin-left: auto;" onclick="App.next()">Prev</mr-button>
+            </mr-div>
+
+            <mr-div id="models"></mr-div>
+
+
+            <mr-div class="information">
+                <mr-text id="name"></mr-text>
+                <mr-text id="desc"></mr-text>
+            </mr-div>
+
+            <mr-light color="hsl(100, 100%, 100%)" intensity="1" data-position="0 1 1"></mr-light>
+
+        </mr-panel>
+    </mr-app>
+
+    <script>
+        var __appState = {
+            fishes: [
+                {
+                    name: "Koi fish",
+                    model: 'koifish.glb',
+                    scale: 0.05,
+                    rotation: "0 0 0",
+                    position: "0 0 0",
+                    desc: "Koi fish are colored varieties of the common carp. \nKoi or more specifically nishikigoi are kept for decorative purposes \nin outdoor koi ponds or water gardens in Japan. Major colors of Koi fish are white, black, red,\n orange, yellow, blue, brown and cream."
+                },
+                {
+                    name: "Tosakin Goldfish",
+                    model: 'tosakin_goldfish.glb',
+                    scale: 0.01,
+                    rotation: "0 -90 0",
+                    position: "0 0 0",
+                    desc: "The Tosakin or curly fantail goldfish is a distinctive breed of goldfish \nwith a large tail fin that spreads out horizontally (like a fan)\n behind the fish. \nThough technically a divided tail, the two halves are attached at the center/middle forming a single fin."
+                },
+                {
+                    name: "Blue Whale",
+                    model: 'blue_whale.glb',
+                    scale: 0.000400,
+                    rotation: "45 -90 360",
+                    position: "0 0 0",
+                    desc: "The Blue Whale (Balaenoptera musculus) is a marine mammal and a baleen whale. \nIt is the largest animal known ever to have existed.\n The blue whale's long and slender body\n can be of various shades of greyish-blue dorsally and somewhat lighter underneath.\n"
+                },
+                {
+                    name: "Great White Shark",
+                    model: 'gwshark.glb',
+                    scale: 0.15,
+                    rotation: "90 0 90",
+                    position: "0 0 0",
+                    desc: "The Great White Shark also known as the white shark, white pointer,\n or simply great white, is a species of large mackerel shark\n which can be found in the coastal surface waters of all the major oceans.\n The great white shark is arguably the world's largest-known extant macropredatory fish,\n and is one of the primary predators of marine mammals, such as pinnipeds and dolphins."
+                },
+
+                {
+                    name: "Great Hammerhead Shark",
+                    model: 'great_hammerhead_shark.glb',
+                    scale: 0.15, 
+                    rotation: "-25 -90 0",
+                    position: "0 0 0",
+                    desc: "The Great Hammerhead Shark is found in tropical\n and warm temperate waters worldwide, \ninhabiting coastal areas and the continental shelf.\n A solitary, strong-swimming apex predator, \nthe great hammerhead feeds on a wide variety of prey \nranging from crustaceans and cephalopods, to bony fish, to smaller sharks.",
+                }
+            ],
+            selected: 0,
+            next: function () {
+                if (this.selected < this.fishes.length - 1) {
+                    this.selected++
+                }
+            },
+            prev: function () {
+                if (this.selected > 0) {
+                    this.selected--
+                }
+            },
+            render: function () {
+                let selectedFish = this.fishes[this.selected];
+
+                document.querySelector("#name").innerText = selectedFish.name;
+                document.querySelector("#desc").innerText = selectedFish.desc;
+
+                let childArray = Array.from(document.querySelector("#models").childNodes);
+
+                // Hide all the fishes but the selected one
+                childArray.forEach(child => {
+                    if (child.dataset.name == App.fishes[App.selected].name) {
+                        child.object3D.visible = true;
+
+                    } else {
+                        child.object3D.visible = false;
+                    }
+                });
+            }
+        }
+
+        // Magic reactivity
+        const handler = {
+            set(target, property, value) {
+                target[property] = value;
+                App.render();
+                return true;
+            }
+        };
+
+        // Magic reactivity
+        const App = new Proxy(__appState, handler);
+
+        App.fishes.forEach(fish => {
+            let model = document.createElement("mr-model");
+            model.setAttribute("src", "./assets/" + fish.model);
+            model.object3D.visible = false;
+            model.dataset.name = fish.name;
+            model.dataset.rotation = fish.rotation;
+            model.dataset.position = fish.position;
+  
+
+            Object.assign(model.style, {
+                scale: fish.scale,
+              
+            })
+            document.querySelector("#models").append(model);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            App.selected = 0;
+        });
+    </script>
+
+</body>
+
+</html>

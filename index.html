@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Fish_demo</title>
+    <title>Fish demo</title>
     <meta name="description" content="MR.js project">
     <script src="https://cdn.jsdelivr.net/npm/mrjs@latest/dist/mr.js"></script>
     <link rel="stylesheet" type="text/css" href="Fish_Demo_Style.css" />
@@ -12,6 +12,7 @@
 
 <body>
     <mr-app>
+        <mr-entity id="anchored-models" data-comp-anchor="type: plane; label: table;"> </mr-entity>
         <mr-panel class="layout">
 
             <mr-div class="nav">
@@ -127,13 +128,19 @@
             model.dataset.name = fish.name;
             model.dataset.rotation = fish.rotation;
             model.dataset.position = fish.position;
+            
   
 
             Object.assign(model.style, {
                 scale: fish.scale,
               
             })
-            document.querySelector("#models").append(model);
+            if(!mrjsUtils.xr.isPresenting){
+                document.querySelector("#models").append(model);
+            } else {
+                document.querySelector("#anchored-models").append(model);
+            }
+           
         });
 
         document.addEventListener('DOMContentLoaded', function () {
